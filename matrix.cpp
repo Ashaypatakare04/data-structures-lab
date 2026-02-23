@@ -4,6 +4,7 @@ using namespace std;
 int main() {
     int a[10][10], b[10][10], c[10][10];
     int i, j, n, d;
+    cout << "Matrix Addition and Subtraction\n";
 
     cout << "Enter the order of matrix: ";
     cin >> n;
