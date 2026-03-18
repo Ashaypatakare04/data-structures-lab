@@ -1,113 +1,62 @@
 #include <iostream>
 using namespace std;
-
-struct Node
-{
-    int data;
-    Node* next;
-};
-
-Node* front = NULL;
-Node* rear = NULL;
-
-void enqueue()
-{
+#define SIZE 100
+int queueArr[SIZE];
+int front = -1;
+int rear = -1;
+void enqueue() {
     int x;
     cout << "Enter 5 elements: ";
-    for (int i = 0; i < 5; ++i)
-    {
+    for (int i = 0; i < 5; i++) {
         cin >> x;
-        Node* temp = new Node();
-        temp->data = x;
-        temp->next = NULL;
-
-        if (rear == NULL)
-        {
-            front = rear = temp;
+        if (rear == SIZE - 1) {
+            cout << "Queue Overflow\n";
+            return;
         }
-        else
-        {
-            rear->next = temp;
-            rear = temp;
-        }
+        if (front == -1) 
+            front = 0;
+        queueArr[++rear] = x;
     }
 }
-
-void dequeue()
-{
-    if (front == NULL)
-    {
+void dequeue() {
+    if (front == -1 || front > rear) {
         cout << "Queue Underflow\n";
         return;
     }
-
-    Node* temp = front;
-    cout << "Deleted element: " << temp->data << endl;
-
-    front = front->next;
-
-    if (front == NULL)
-        rear = NULL;
-
-    delete temp;
+    cout << "Deleted element: " << queueArr[front++] << endl;
+    if (front > rear)
+        front = rear = -1;
 }
-
-void peek()
-{
-    if (front == NULL)
-    {
+void peek() {
+    if (front == -1 || front > rear) {
         cout << "Queue is empty\n";
         return;
     }
-
-    cout << "Front element: " << front->data << endl;
+    cout << "Front element: " << queueArr[front] << endl;
 }
-
-void display()
-{
-    Node* temp = front;
-
-    if (temp == NULL)
-    {
+void display() {
+    if (front == -1 || front > rear) {
         cout << "Queue is empty\n";
         return;
     }
-
     cout << "Queue elements:\n";
-    int count = 0;
-
-    while (temp != NULL)
-    {
-        cout << temp->data << " ";
-        ++count;
-        if (count % 5 == 0)
-            cout << endl;
-        temp = temp->next;
+    for (int i = front; i <= rear; i++) {
+        cout << queueArr[i] << " ";
     }
-
-    if (count % 5 != 0)
-        cout << endl;
+    cout << endl;
 }
-
-int main()
-{
-    int choice;
-
-    do
-    {
-        cout << "\n1.Enqueue\n2.Dequeue\n3.Peek\n4.Display\n5.Exit\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-            case 1: enqueue(); break;
-            case 2: dequeue(); break;
-            case 3: peek(); break;
-            case 4: display(); break;
-        }
-
+int main() {
+int choice;
+do {
+    cout << "\n1.Enqueue\n2.Dequeue\n3.Peek\n4.Display\n5.Exit\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+    switch (choice) {
+    case 1: enqueue(); break;
+    case 2: dequeue(); break;
+    case 3: peek(); break;
+    case 4: display(); break;
+ }
     } while (choice != 5);
-
     return 0;
 }
